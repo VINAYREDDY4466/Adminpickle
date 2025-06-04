@@ -24,81 +24,77 @@ const Reviews = () => {
     setLoading(true);
     try {
       await axios.post('http://localhost:4000/api/reviews/submit', formData);
-      setMessage('✅ Product review submitted successfully!');
+      setMessage('✅ Review submitted successfully!');
       setFormData({ name: '', comment: '', rating: '', topRated: false });
     } catch (error) {
-      setMessage('❌ Error submitting review. Please try again.');
-      console.error('Error:', error);
+      setMessage('❌ Failed to submit. Try again.');
+      console.error(error);
     }
     setLoading(false);
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-gradient-to-br from-indigo-100 to-white shadow-xl rounded-2xl">
-      <h2 className="text-4xl font-extrabold mb-6 text-center text-indigo-700">📝 Add a Product Review</h2>
-      
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+      <h2 className="text-2xl font-bold text-center text-indigo-600 mb-4">Submit a Review</h2>
+
       {message && (
-        <div className={`p-4 mb-6 rounded-lg text-center font-medium transition-all duration-300 ${
-          message.includes('Error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+        <div className={`mb-4 text-sm text-center py-2 px-4 rounded ${
+          message.includes('❌') ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
         }`}>
           {message}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-md font-semibold text-gray-800">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Enter your name"
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300"
-          />
-        </div>
-        <div>
-          <label className="block text-md font-semibold text-gray-800">Comment</label>
-          <textarea
-            name="comment"
-            value={formData.comment}
-            onChange={handleChange}
-            required
-            rows="4"
-            placeholder="Write your comment here..."
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300"
-          />
-        </div>
-        <div>
-          <label className="block text-md font-semibold text-gray-800">Rating (1 to 5)</label>
-          <input
-            type="number"
-            name="rating"
-            value={formData.rating}
-            onChange={handleChange}
-            required
-            min="1"
-            max="5"
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300"
-          />
-        </div>
-        <div className="flex items-center gap-2">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Your name"
+          required
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+
+        <textarea
+          name="comment"
+          value={formData.comment}
+          onChange={handleChange}
+          placeholder="Your comment"
+          rows="3"
+          required
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+
+        <input
+          type="number"
+          name="rating"
+          value={formData.rating}
+          onChange={handleChange}
+          placeholder="Rating (1-5)"
+          min="1"
+          max="5"
+          required
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+
+        <label className="flex items-center space-x-2 text-sm text-gray-700">
           <input
             type="checkbox"
             name="topRated"
             checked={formData.topRated}
             onChange={handleChange}
-            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            className="h-4 w-4"
           />
-          <label className="text-gray-700 font-medium">Mark as Top Rated</label>
-        </div>
+          <span>Mark as Top Rated</span>
+        </label>
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-50"
+          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition duration-200 disabled:opacity-50"
         >
-          {loading ? 'Submitting...' : 'Submit Review'}
+          {loading ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>
@@ -106,3 +102,5 @@ const Reviews = () => {
 };
 
 export default Reviews;
+
+
