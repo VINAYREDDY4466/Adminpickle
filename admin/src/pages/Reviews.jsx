@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { backendUrl } from '../App';
 
 const Reviews = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const Reviews = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:4000/api/reviews/submit', formData);
+      await axios.post(`${backendUrl}/api/reviews/submit`, formData);
       setMessage('✅ Review submitted successfully!');
       setFormData({ name: '', comment: '', rating: '', topRated: false });
     } catch (error) {
